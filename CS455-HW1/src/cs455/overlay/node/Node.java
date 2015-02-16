@@ -1,5 +1,6 @@
 package cs455.overlay.node;
 
-public class Node {
+public interface Node {
+	public void onEvent();
 
 }
