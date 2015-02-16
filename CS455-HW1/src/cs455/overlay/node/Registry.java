@@ -1,5 +1,25 @@
 package cs455.overlay.node;
 
-public class Registry {
+import cs455.overlay.transport.TCPConnection;
+
+public class Registry implements Node{
+
+	@Override
+	public void onEvent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registConnect(TCPConnection connect) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deregistConnect(TCPConnection connect) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
