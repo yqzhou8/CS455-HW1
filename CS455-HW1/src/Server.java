@@ -3,7 +3,8 @@
 
 import java.net.*;
 
-import cs455.overlay.transport.TCPReceiver;
+
+import cs455.overlay.transport.TCPReceiverThread;
 import cs455.overlay.transport.TCPSender;
 
 public class Server
@@ -24,7 +25,7 @@ public class Server
 		   while (true) {
 			   Socket socket = serverSocket.accept();
 	    			while (socket.isConnected()) {
-	    				TCPReceiver receiver = new TCPReceiver(socket);
+	    				TCPReceiverThread receiver = new TCPReceiverThread(socket);
 	    				TCPSender sender = new TCPSender(socket);
 	    				byte[] rawBytes = receiver.receive();
 	    				String message = new String(rawBytes);

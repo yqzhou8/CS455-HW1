@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.net.Socket;
 
-import cs455.overlay.transport.TCPReceiver;
+import cs455.overlay.transport.TCPReceiverThread;
 import cs455.overlay.transport.TCPSender;
 
 public class Client
@@ -21,7 +21,7 @@ public class Client
 	                      + client.getRemoteSocketAddress());
 	         
 	         TCPSender sender = new TCPSender(client);
-	         TCPReceiver receiver = new TCPReceiver(client);
+	         TCPReceiverThread receiver = new TCPReceiverThread(client);
 	         Scanner keyboard = new Scanner(System.in);
 	         String input = keyboard.nextLine();
 	         while (input != null && !input.equalsIgnoreCase("quit")) {

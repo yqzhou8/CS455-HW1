@@ -9,28 +9,24 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class OverlayNodeSendsRegistration implements Event {
-	byte Message_Type; // OVERLAY_NODE_SENDS_REGISTRATION;
-	byte IP_address_length;
-	byte[] IP_address; // from InetAddress.getAddress()
-	int Port_number;
+	// TODO: set it to private and getter and setter
+	public byte Message_Type; // OVERLAY_NODE_SENDS_REGISTRATION;
+	public byte IP_address_length;
+	public byte[] IP_address; // from InetAddress.getAddress()
+	public int Port_number;
 
 	@Override
 	public byte[] getBytes() throws IOException {
-		// TODO Auto-generated method stub
+		
 		byte[] marshalledBytes = null;
 		ByteArrayOutputStream baOutputStream = new ByteArrayOutputStream();
 		DataOutputStream dout = new DataOutputStream(new BufferedOutputStream(
 				baOutputStream));
 
-		// dout.writeInt(type);
-		// dout.writeLong(timestamp);
-		//
-		// byte[] identifierBytes = identifier.getBytes();
-		// int elementLength = identifierBytes.length;
-		// dout.writeInt(elementLength);
-		// dout.write(identifierBytes);
-		//
-		// dout.writeInt(tracker);
+		dout.writeByte(Message_Type);
+		dout.writeByte(IP_address_length);
+		dout.write(IP_address);
+		dout.writeInt(Port_number);
 
 		dout.flush();
 		marshalledBytes = baOutputStream.toByteArray();
@@ -41,21 +37,18 @@ public class OverlayNodeSendsRegistration implements Event {
 
 	@Override
 	public void WireFormatWidget(byte[] marshalledBytes) throws IOException {
-		// TODO Auto-generated method stub
+		
 		ByteArrayInputStream baInputStream = new ByteArrayInputStream(
 				marshalledBytes);
 		DataInputStream din = new DataInputStream(new BufferedInputStream(
 				baInputStream));
-
-		// type = din.readInt();
-		// timestamp = din.readLong();
-		//
-		// int identifierLength = din.readInt();
-		// byte[] identifierBytes = new byte[identifierLength];
-		// din.readFully(identifierBytes);
-		// identifier = new String(identifierBytes);
-		//
-		// tracker = din.readInt();
+		
+		this.Message_Type = din.readByte();
+		this.IP_address_length = din.readByte();
+		byte[] id = new byte[this.IP_address_length];
+		din.readFully(id);
+		this.IP_address = id;
+		this.Port_number = din.readInt();
 
 		baInputStream.close();
 		din.close();
@@ -63,7 +56,7 @@ public class OverlayNodeSendsRegistration implements Event {
 
 	@Override
 	public byte getType() {
-		// TODO Auto-generated method stub
+		
 		return this.Message_Type = Protocol.OVERLAY_NODE_SENDS_REGISTRATION;
 	}
 

@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class TCPReceiver {
+public class TCPReceiverThread {
 
 	private Socket socket;
 	private DataInputStream dataInputStream;
 	
-	public TCPReceiver(Socket socket) throws IOException {
+	public TCPReceiverThread(Socket socket) throws IOException {
 		this.socket = socket;
 		this.dataInputStream = new DataInputStream(socket.getInputStream());
 	}

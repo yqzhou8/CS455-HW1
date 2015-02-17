@@ -6,11 +6,13 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public class EventFactory {
+	
+	// singleton instance
 	private static EventFactory factory = null;
 
 	public static EventFactory getInstance() {
-		if (factory == null)
-			factory = new EventFactory();
+//		if (factory == null)
+//			factory = new EventFactory();
 		return factory;
 	}
 
@@ -25,7 +27,6 @@ public class EventFactory {
 				return new OverlayNodeSendsRegistration();
 			case Protocol.REGISTRY_REPORTS_REGISTRATION_STATUS:
 				return new RegistryReportsRegistrationStatus();
-
 			default:
 				return null;
 
