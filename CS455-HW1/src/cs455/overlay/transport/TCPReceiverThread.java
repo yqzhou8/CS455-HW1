@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
+import cs455.overlay.node.Node;
+
 public class TCPReceiverThread {
 
 	private Socket socket;
+	private Node node;
 	private DataInputStream dataInputStream;
 	
-	public TCPReceiverThread(Socket socket) throws IOException {
+	public TCPReceiverThread(Socket socket, Node node) throws IOException {
 		this.socket = socket;
+		this.node = node;
 		this.dataInputStream = new DataInputStream(socket.getInputStream());
 	}
 	

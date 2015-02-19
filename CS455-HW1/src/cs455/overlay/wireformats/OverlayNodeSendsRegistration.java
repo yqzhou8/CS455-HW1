@@ -14,6 +14,8 @@ public class OverlayNodeSendsRegistration implements Event {
 	public byte IP_address_length;
 	public byte[] IP_address; // from InetAddress.getAddress()
 	public int Port_number;
+	
+	
 
 	@Override
 	public byte[] getBytes() throws IOException {
@@ -63,6 +65,16 @@ public class OverlayNodeSendsRegistration implements Event {
 	@Override
 	public String toString() {
 		return "IP address: " + IP_address + " Port number: " + Port_number;
+	}
+
+	public void setMessIP(byte[] address) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setPort(int messaging_port) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

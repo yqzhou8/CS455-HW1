@@ -33,6 +33,7 @@ public class TCPServerThread extends Thread {
 		return this.sender;
 	}
 
+	//send data
 	public void run() {
 		while (socket != null) {
 			try {

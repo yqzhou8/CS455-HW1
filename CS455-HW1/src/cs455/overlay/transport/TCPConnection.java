@@ -9,35 +9,65 @@ import cs455.overlay.node.Node;
 public class TCPConnection {
 	Node node;
 	ServerSocket serverSocket = null;
+	int port;
+	byte[] address;
 	// represents the connection between two nodes
 
 	// Encapsulates the corresponding TCPReceiverThread and TCPSender
 	// TCPSender and TCPReceiver
 	TCPSender sender;
 	TCPReceiverThread receiver;
-
-	public TCPConnection(Node node, int port) {
+	
+	public TCPConnection(Node node, Socket socket) throws IOException {
+		this.receiver = new TCPReceiverThread(socket, node);
+		this.sender = new TCPSender(socket);
 		this.node = node;
 		try {
-			serverSocket = new ServerSocket(port);
+			serverSocket = new ServerSocket();
+			port = serverSocket.getLocalPort();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		this.address = serverSocket.getInetAddress().toString().getBytes();
+	}
+	
+	public TCPConnection(Node node, int port){
+		this.node = node;
+		this.port = port;
+		try {
+			serverSocket = new ServerSocket();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		this.address = serverSocket.getInetAddress().toString().getBytes();
+	}
+	
+	public int getPort(){
+		return this.port;
+	}
+	
+	public byte[] getAddress(){
+		return this.address;
 	}
 
-	public void run() {
+	//send data
+	public void start() {
 
 		// start accepting connections
 		try {
 			while (true) {
 				Socket socket = serverSocket.accept();
-
+//				TCPConnection conn = new TCPConnection(node,socket);
+				TCPServerThread serverThread = new TCPServerThread(socket, node);
+				serverThread.start();
+				//TODO cache the connection
+				
 				// ServerThread.java
-				while (socket.isConnected()) {
-					TCPServerThread tcpconnection = new TCPServerThread(socket, node);
-					tcpconnection.start();
-				}
-				serverSocket.close();
+//				while (socket.isConnected()) {
+//					TCPServerThread tcpconnection = new TCPServerThread(socket, node);
+//					tcpconnection.start();
+//				}
+//				serverSocket.close();
 			}
 
 		} catch (Exception e) {
@@ -45,6 +75,7 @@ public class TCPConnection {
 			System.out.println("server is closed");
 		}
 	}
+
 
 	// store and reuse the connection
 	// ConnectionCache
